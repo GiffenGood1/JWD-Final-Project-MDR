@@ -15,8 +15,10 @@ class TaskManager {
     });
   }
   createTaskHtml(taskName, description, assignedTo, dueDate, status) {
-    const html = `
-    <div class="row bg-warning mb-4 p-3" style="border-radius: 20px;">
+    //grab container
+    const container = document.querySelector('#card-container')
+    //create card info
+    const cardInfo = `
     <div class="col-10">
       <h2 class="card-title mb-3 display-4">${taskName}</h2>
       <p class="card-text">${description}</p>
@@ -31,10 +33,18 @@ class TaskManager {
         </div>
       </div>
     </div>
-    <input type="range" class="form-range slider" min="0" max="8" step="1" id="customRange1">
-  </div>`;
+    <input type="range" class="form-range slider" min="0" max="8" step="1" id="customRange1">`;
+    //create card and add card info
+    const card = document.createElement('div')
+    card.classList.add("row", "bg-warning", "mb-4", "p-3", "task-card")
+    card.innerHTML = cardInfo
 
-    return html;
+    //add card to container
+    container.append(card)
+    
+    // console.log(container)
+    // console.log(card)
+    // console.log(cardInfo)
   }
 
   render() {
