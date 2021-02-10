@@ -85,20 +85,21 @@ const validate = (event) => {
 
     //Add html
 
-    const taskHtml = tasks.createTaskHtml(
-      tasks.taskList[tasks.currentId - 1].taskName,
-      tasks.taskList[tasks.currentId - 1].description,
-      tasks.taskList[tasks.currentId - 1].assignedTo,
-      tasks.taskList[tasks.currentId - 1].dueDate,
-      tasks.taskList[tasks.currentId - 1].status
-    );
+    // const taskHtml = tasks.createTaskHtml(
+    //   tasks.taskList[tasks.currentId - 1].taskName,
+    //   tasks.taskList[tasks.currentId - 1].description,
+    //   tasks.taskList[tasks.currentId - 1].assignedTo,
+    //   tasks.taskList[tasks.currentId - 1].dueDate,
+    //   tasks.taskList[tasks.currentId - 1].status
+    // );
 
     // Render task
     //cardContainer.append.(taskHtml);
+    tasks.createTaskHtml(taskName.value, description.value, assignedTo.value, dueDate.value, status.value)
 
     //  TASK TESTS
     console.log(tasks);
-    console.log(taskHtml);
+    // console.log(taskHtml);
 
     //return form to default
     taskName.classList.remove("is-valid");
@@ -131,3 +132,5 @@ form.addEventListener("reset", (event) => {
   description.classList.remove("is-valid");
   description.classList.remove("is-invalid");
 });
+
+

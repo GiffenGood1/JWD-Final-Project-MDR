@@ -10,3 +10,7 @@ body {
   margin: 0px auto;
   width: 75%;
 }
+
+.task-card {
+  border-radius: 20px;
+}
