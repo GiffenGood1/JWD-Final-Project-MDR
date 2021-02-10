@@ -86,18 +86,19 @@ const validate = (event) => {
     //Add html
 
     const taskHtml = tasks.createTaskHtml(
-      tasks.task[tasks.currentId - 1].taskName,
-      tasks.task[tasks.currentId - 1].description,
-      tasks.task[tasks.currentId - 1].assignedTo,
-      tasks.task[tasks.currentId - 1].dueDate,
-      tasks.task[tasks.currentId - 1].status
+      tasks.taskList[tasks.currentId - 1].taskName,
+      tasks.taskList[tasks.currentId - 1].description,
+      tasks.taskList[tasks.currentId - 1].assignedTo,
+      tasks.taskList[tasks.currentId - 1].dueDate,
+      tasks.taskList[tasks.currentId - 1].status
     );
 
     // Render task
-    cardContainer.append.(taskHtml);
+    //cardContainer.append.(taskHtml);
 
     //  TASK TESTS
     console.log(tasks);
+    console.log(taskHtml);
 
     //return form to default
     taskName.classList.remove("is-valid");
