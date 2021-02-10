@@ -38,6 +38,6 @@ class TaskManager {
   }
 
   render() {
-    const tasksHtmlList = [];
+    //const tasksHtmlList = [];
   }
 }

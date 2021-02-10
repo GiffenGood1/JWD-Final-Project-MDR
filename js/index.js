@@ -5,6 +5,7 @@ const assignedTo = document.querySelector("#assigned");
 const status = document.querySelector("select");
 const dueDate = document.querySelector("#date");
 const description = document.querySelector("#exampleFormControlTextarea1");
+const cardContainer = document.querySelector("#card-container");
 
 const validate = (event) => {
   event.preventDefault();
@@ -83,21 +84,20 @@ const validate = (event) => {
     );
 
     //Add html
-    console.log(
-      tasks.createTaskHtml(
-        tasks.task[tasks.currentId - 1].taskName,
-        tasks.task[tasks.currentId - 1].description,
-        tasks.task[tasks.currentId - 1].assignedTo,
-        tasks.task[tasks.currentId - 1].dueDate,
-        tasks.task[tasks.currentId - 1].status
-      )
+
+    const taskHtml = tasks.createTaskHtml(
+      tasks.task[tasks.currentId - 1].taskName,
+      tasks.task[tasks.currentId - 1].description,
+      tasks.task[tasks.currentId - 1].assignedTo,
+      tasks.task[tasks.currentId - 1].dueDate,
+      tasks.task[tasks.currentId - 1].status
     );
+
+    // Render task
+    cardContainer.append.(taskHtml);
+
     //  TASK TESTS
     console.log(tasks);
-    //console.log(tasks[0].taskName);
-    console.log(tasks.task);
-    console.log(tasks.task[0]);
-    console.log(tasks.task[0].status);
 
     //return form to default
     taskName.classList.remove("is-valid");
