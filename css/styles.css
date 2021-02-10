@@ -1,8 +1,12 @@
-body{
-    background-color: lightgray !important;
-
+body {
+  background-color: lightgray !important;
 }
 
-.bg-secondary{
-    background-color: rgb(154, 178, 185) !important;
+.bg-secondary {
+  background-color: rgb(154, 178, 185) !important;
+}
+
+.slider {
+  margin: 0px auto;
+  width: 75%;
 }

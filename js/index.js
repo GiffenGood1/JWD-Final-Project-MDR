@@ -1,20 +1,21 @@
 const tasks = new TaskManager();
+const form = document.querySelector("#form-validate");
+const taskName = document.querySelector("#task-name");
+const assignedTo = document.querySelector("#assigned");
+const status = document.querySelector("select");
+const dueDate = document.querySelector("#date");
+const description = document.querySelector("#exampleFormControlTextarea1");
 
 const validate = (event) => {
   event.preventDefault();
-  const name = document.querySelector("#task-name");
-  const assignedTo = document.querySelector("#assigned");
-  const status = document.querySelector("select");
-  const dueDate = document.querySelector("#date");
-  const description = document.querySelector("#exampleFormControlTextarea1");
 
   // Name Validation
-  if (name.value.length < 1) {
-    name.classList.add("is-invalid");
-    name.classList.remove("is-valid");
+  if (taskName.value.length < 1) {
+    taskName.classList.add("is-invalid");
+    taskName.classList.remove("is-valid");
   } else {
-    name.classList.add("is-valid");
-    name.classList.remove("is-invalid");
+    taskName.classList.add("is-valid");
+    taskName.classList.remove("is-invalid");
   }
 
   // AssignedTo Validation
@@ -66,7 +67,7 @@ const validate = (event) => {
 
   if (
     description.classList.contains("is-valid") &&
-    name.classList.contains("is-valid") &&
+    taskName.classList.contains("is-valid") &&
     status.classList.contains("is-valid") &&
     assignedTo.classList.contains("is-valid") &&
     dueDate.classList.contains("is-valid")
@@ -74,24 +75,38 @@ const validate = (event) => {
     // Add task from form to class
 
     tasks.addTask(
-      name.value,
+      taskName.value,
       description.value,
       assignedTo.value,
       dueDate.value,
       status.value
     );
 
+    //Add html
+    console.log(
+      tasks.createTaskHtml(
+        tasks.task[tasks.currentId - 1].taskName,
+        tasks.task[tasks.currentId - 1].description,
+        tasks.task[tasks.currentId - 1].assignedTo,
+        tasks.task[tasks.currentId - 1].dueDate,
+        tasks.task[tasks.currentId - 1].status
+      )
+    );
     //  TASK TESTS
     console.log(tasks);
+    //console.log(tasks[0].taskName);
+    console.log(tasks.task);
+    console.log(tasks.task[0]);
+    console.log(tasks.task[0].status);
 
     //return form to default
-    name.classList.remove("is-valid");
+    taskName.classList.remove("is-valid");
     assignedTo.classList.remove("is-valid");
     status.classList.remove("is-valid");
     dueDate.classList.remove("is-valid");
     description.classList.remove("is-valid");
 
-    name.value = "";
+    taskName.value = "";
     assignedTo.value = "";
     status.value = "Choose Status";
     dueDate.value = "";
@@ -99,4 +114,19 @@ const validate = (event) => {
   }
 };
 
-document.querySelector("#form-validate").addEventListener("submit", validate);
+form.addEventListener("submit", validate);
+
+//const clearBtn = document.querySelector();
+
+form.addEventListener("reset", (event) => {
+  taskName.classList.remove("is-valid");
+  taskName.classList.remove("is-invalid");
+  assignedTo.classList.remove("is-valid");
+  assignedTo.classList.remove("is-invalid");
+  status.classList.remove("is-valid");
+  status.classList.remove("is-invalid");
+  dueDate.classList.remove("is-valid");
+  dueDate.classList.remove("is-invalid");
+  description.classList.remove("is-valid");
+  description.classList.remove("is-invalid");
+});
