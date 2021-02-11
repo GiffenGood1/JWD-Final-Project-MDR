@@ -6,6 +6,8 @@ const status = document.querySelector("select");
 const dueDate = document.querySelector("#date");
 const description = document.querySelector("#exampleFormControlTextarea1");
 const cardContainer = document.querySelector("#card-container");
+const formBtn = document.querySelector(".plus-icon");
+const formContainer = document.querySelector(".task-form");
 
 const validate = (event) => {
   event.preventDefault();
@@ -95,8 +97,19 @@ const validate = (event) => {
 
     // Render task
     //cardContainer.append.(taskHtml);
-    tasks.createTaskHtml(taskName.value, description.value, assignedTo.value, dueDate.value, status.value, tasks.currentId)
-    
+    tasks.createTaskHtml(
+      taskName.value,
+      description.value,
+      assignedTo.value,
+      dueDate.value,
+      status.value,
+      tasks.currentId
+    );
+
+    // open and close form
+    formBtn.classList.toggle("plus-icon-rotate-open");
+    form.classList.toggle("display-none");
+    formContainer.classList.toggle("pb-4");
 
     //  TASK TESTS
     console.log(tasks);
@@ -134,12 +147,17 @@ form.addEventListener("reset", (event) => {
   description.classList.remove("is-invalid");
 });
 
+const container = document.querySelector("#card-container");
 
+container.addEventListener("click", (event) => {
+  tasks.deleteTaskHtml(event);
+  tasks.deleteTaskObject(event);
+});
 
-const container = document.querySelector('#card-container')
+// toggle form open and close
 
-container.addEventListener('click', (event) => {
-  tasks.deleteTaskHtml(event)
-  tasks.deleteTaskObject(event)
-})
-
+formBtn.addEventListener("click", () => {
+  formBtn.classList.toggle("plus-icon-rotate-open");
+  form.classList.toggle("display-none");
+  formContainer.classList.toggle("pb-4");
+});

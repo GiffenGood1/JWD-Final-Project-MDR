@@ -14,3 +14,23 @@ body {
 .task-card {
   border-radius: 20px;
 }
+
+.task-form {
+  border-radius: 20px;
+}
+
+.display-none {
+  display: none;
+}
+
+.plus-icon {
+  height: 50px;
+  width: 50px;
+  transform: rotate(0deg);
+  transition: transform 0.1s linear;
+}
+
+.plus-icon-rotate-open {
+  transform: rotate(45deg);
+  transition: transform 0.1s linear;
+}
