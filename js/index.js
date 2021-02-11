@@ -95,7 +95,8 @@ const validate = (event) => {
 
     // Render task
     //cardContainer.append.(taskHtml);
-    tasks.createTaskHtml(taskName.value, description.value, assignedTo.value, dueDate.value, status.value)
+    tasks.createTaskHtml(taskName.value, description.value, assignedTo.value, dueDate.value, status.value, tasks.currentId)
+    
 
     //  TASK TESTS
     console.log(tasks);
@@ -133,4 +134,12 @@ form.addEventListener("reset", (event) => {
   description.classList.remove("is-invalid");
 });
 
+
+
+const container = document.querySelector('#card-container')
+
+container.addEventListener('click', (event) => {
+  tasks.deleteTaskHtml(event)
+  tasks.deleteTaskObject(event)
+})
 
