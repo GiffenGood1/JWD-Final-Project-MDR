@@ -14,7 +14,7 @@ class TaskManager {
       status: status,
     });
   }
-  createTaskHtml(taskName, description, assignedTo, dueDate, status) {
+  createTaskHtml(taskName, description, assignedTo, dueDate, status, taskId) {
     //grab container
     const container = document.querySelector('#card-container')
     //create card info
@@ -29,7 +29,7 @@ class TaskManager {
     <div class="col">
       <div class="row">
         <div class="col text-end">
-          <button class="btn-close btn-close"></button>
+          <button class="btn-close btn-close delete-btn"></button>
         </div>
       </div>
     </div>
@@ -37,6 +37,8 @@ class TaskManager {
     //create card and add card info
     const card = document.createElement('div')
     card.classList.add("row", "bg-warning", "mb-4", "p-3", "task-card")
+    //https://code-boxx.com/html-custom-data-attribute/
+    card.dataset.taskId = taskId
     card.innerHTML = cardInfo
 
     //add card to container
@@ -47,7 +49,22 @@ class TaskManager {
     // console.log(cardInfo)
   }
 
-  render() {
-    //const tasksHtmlList = [];
+  deleteTaskHtml(event) {
+    if (event.target.classList.contains('delete-btn')) {
+      event.target.parentElement.parentElement.parentElement.parentElement.remove()
+    }
+  }
+
+  deleteTaskObject(event) {
+    if (event.target.classList.contains('delete-btn')) {
+      const cardTaskId = event.target.parentElement.parentElement.parentElement.parentElement.dataset.taskId
+      tasks.taskList.forEach((element, index) => {
+        if (element.id == cardTaskId) {
+          //Test for delete
+          console.log(tasks)
+          tasks.taskList.splice(index, 1)
+        }
+      });
+    }
   }
 }
