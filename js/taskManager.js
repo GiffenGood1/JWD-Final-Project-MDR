@@ -19,8 +19,12 @@ class TaskManager {
     const container = document.querySelector("#card-container");
     //convert date
     const dateSplittest = dueDate.split(/\D/);
-    const dateValuetest = new Date(dateSplittest[0], --dateSplittest[1], ++dateSplittest[2]);
-    const convertedDate = dateValuetest.toString().split('00:00:00')
+    const dateValuetest = new Date(
+      dateSplittest[0],
+      --dateSplittest[1],
+      ++dateSplittest[2]
+    );
+    const convertedDate = dateValuetest.toString().split("00:00:00");
 
     //create card info
     const cardInfo = `
@@ -41,7 +45,7 @@ class TaskManager {
     <input type="range" class="form-range slider" min="0" max="8" step="1" id="customRange1">`;
     //create card and add card info
     const card = document.createElement("div");
-    card.classList.add("row", "bg-warning", "mb-4", "p-3", "task-card");
+    card.classList.add("row", "bg-info", "mb-4", "p-3", "task-card");
     //https://code-boxx.com/html-custom-data-attribute/
     card.dataset.taskId = taskId;
     card.innerHTML = cardInfo;
@@ -82,5 +86,27 @@ class TaskManager {
   save() {
     localStorage.setItem("taskList", JSON.stringify(this.taskList));
     localStorage.setItem("currentId", JSON.stringify(this.currentId));
+  }
+
+  fucntionName() {
+    // for tasks
+    //if red overdue, orange 1-2, yellow 3-5 green 5 or more days, blue done
+    this.taskList.forEach((task) => {
+      // convert date to ms
+      const dateSplit = task.dueDate.split(/\D/);
+      const dateValue = new Date(dateSplit[0], --dateSplit[1], ++dateSplit[2]);
+      const dateNow = Date.now();
+      // convert and compare ms to days
+      const milsec = dateValue - dateNow;
+      const daysTillDue = milsec / 86400000;
+      // grab cards
+      const cardsList = document.querySelector("#card-container");
+
+      if (daysTillDue <= 0) {
+      } else if (daysTillDue <= 2) {
+      } else if (daysTillDue <= 5) {
+      } else {
+      }
+    });
   }
 }

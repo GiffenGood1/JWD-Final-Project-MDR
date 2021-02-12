@@ -180,3 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 });
+
+const hello = document.querySelector("#card-container").childNodes;
+console.log(hello);
+
+console.log(hello.length);
