@@ -17,14 +17,19 @@ class TaskManager {
   createTaskHtml(taskName, description, assignedTo, dueDate, status, taskId) {
     //grab container
     const container = document.querySelector("#card-container");
+    //convert date
+    const dateSplittest = dueDate.split(/\D/);
+    const dateValuetest = new Date(dateSplittest[0], --dateSplittest[1], ++dateSplittest[2]);
+    const convertedDate = dateValuetest.toString().split('00:00:00')
+
     //create card info
     const cardInfo = `
     <div class="col-10">
-      <h2 class="card-title mb-3 display-4">${taskName}</h2>
+      <h2 class="card-title mb-3 display-4 fw-bold">${taskName}</h2>
       <p class="card-text">${description}</p>
-      <h6 class="card-subtitle pb-3">Assigned To: ${assignedTo}</h6>
-      <h6 class="card-subtitle pb-3">Due Date: ${dueDate}</h6>
-      <h6 class="card-subtitle pb-3">Status: ${status}</h6>
+      <h6 class="card-subtitle pb-3 fw-bold">Assigned To: <span class="card-text notbold">${assignedTo}</span></h6>
+      <h6 class="card-subtitle pb-3 fw-bold">Due Date: <span class="card-text notbold">${convertedDate[0]}</span></h6>
+      <h6 class="card-subtitle pb-3 fw-bold">Status: <span class="card-text notbold">${status}</span></h6>
     </div>
     <div class="col">
       <div class="row">
