@@ -1,4 +1,13 @@
-const tasks = new TaskManager();
+let tasks;
+if (localStorage.taskList === undefined) {
+  tasks = new TaskManager();
+} else {
+  tasks = new TaskManager(
+    JSON.parse(localStorage.getItem("taskList")),
+    parseInt(localStorage.getItem("currentId"))
+  );
+}
+console.log(tasks);
 const form = document.querySelector("#form-validate");
 const taskName = document.querySelector("#task-name");
 const assignedTo = document.querySelector("#assigned");
@@ -106,6 +115,8 @@ const validate = (event) => {
       tasks.currentId
     );
 
+    tasks.save();
+
     // open and close form
     formBtn.classList.toggle("plus-icon-rotate-open");
     form.classList.toggle("display-none");
@@ -130,9 +141,10 @@ const validate = (event) => {
   }
 };
 
+// Submit Form Event
 form.addEventListener("submit", validate);
 
-//const clearBtn = document.querySelector();
+// Clear Form Event
 
 form.addEventListener("reset", (event) => {
   taskName.classList.remove("is-valid");
@@ -147,11 +159,14 @@ form.addEventListener("reset", (event) => {
   description.classList.remove("is-invalid");
 });
 
+// Delete Task Event
 const container = document.querySelector("#card-container");
 
 container.addEventListener("click", (event) => {
   tasks.deleteTaskHtml(event);
   tasks.deleteTaskObject(event);
+  console.log(tasks);
+  tasks.save();
 });
 
 // toggle form open and close
@@ -160,4 +175,21 @@ formBtn.addEventListener("click", () => {
   formBtn.classList.toggle("plus-icon-rotate-open");
   form.classList.toggle("display-none");
   formContainer.classList.toggle("pb-4");
+});
+
+// Load tasks from storage
+
+document.addEventListener("DOMContentLoaded", () => {
+  tasks.taskList.forEach((task) => {
+    console.log(task);
+    console.log(task.id);
+    tasks.createTaskHtml(
+      task.taskName,
+      task.description,
+      task.assignedTo,
+      task.dueDate,
+      task.status,
+      task.id
+    );
+  });
 });

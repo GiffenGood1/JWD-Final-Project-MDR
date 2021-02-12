@@ -1,6 +1,6 @@
 class TaskManager {
-  constructor(currentId = 0) {
-    this.taskList = [];
+  constructor(taskList = [], currentId = 0) {
+    this.taskList = taskList;
     this.currentId = currentId;
   }
   addTask(taskName, description, assignedTo, dueDate, status) {
@@ -16,7 +16,7 @@ class TaskManager {
   }
   createTaskHtml(taskName, description, assignedTo, dueDate, status, taskId) {
     //grab container
-    const container = document.querySelector('#card-container')
+    const container = document.querySelector("#card-container");
     //create card info
     const cardInfo = `
     <div class="col-10">
@@ -35,36 +35,47 @@ class TaskManager {
     </div>
     <input type="range" class="form-range slider" min="0" max="8" step="1" id="customRange1">`;
     //create card and add card info
-    const card = document.createElement('div')
-    card.classList.add("row", "bg-warning", "mb-4", "p-3", "task-card")
+    const card = document.createElement("div");
+    card.classList.add("row", "bg-warning", "mb-4", "p-3", "task-card");
     //https://code-boxx.com/html-custom-data-attribute/
-    card.dataset.taskId = taskId
-    card.innerHTML = cardInfo
+    card.dataset.taskId = taskId;
+    card.innerHTML = cardInfo;
 
     //add card to container
-    container.append(card)
-    
+    container.append(card);
+
     // console.log(container)
     // console.log(card)
     // console.log(cardInfo)
   }
 
   deleteTaskHtml(event) {
-    if (event.target.classList.contains('delete-btn')) {
-      event.target.parentElement.parentElement.parentElement.parentElement.remove()
+    if (event.target.classList.contains("delete-btn")) {
+      event.target.parentElement.parentElement.parentElement.parentElement.remove();
     }
   }
 
   deleteTaskObject(event) {
-    if (event.target.classList.contains('delete-btn')) {
-      const cardTaskId = event.target.parentElement.parentElement.parentElement.parentElement.dataset.taskId
+    // If Delete button is pressed
+    if (event.target.classList.contains("delete-btn")) {
+      const cardTaskId =
+        event.target.parentElement.parentElement.parentElement.parentElement
+          .dataset.taskId;
+
+      console.log(cardTaskId);
+
       tasks.taskList.forEach((element, index) => {
+        console.log(element);
         if (element.id == cardTaskId) {
-          //Test for delete
-          console.log(tasks)
-          tasks.taskList.splice(index, 1)
+          tasks.taskList.splice(index, 1);
         }
+        console.log(tasks);
       });
     }
+  }
+
+  save() {
+    localStorage.setItem("taskList", JSON.stringify(this.taskList));
+    localStorage.setItem("currentId", JSON.stringify(this.currentId));
   }
 }
