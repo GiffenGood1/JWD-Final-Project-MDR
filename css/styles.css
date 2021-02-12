@@ -34,3 +34,8 @@ body {
   transform: rotate(45deg);
   transition: transform 0.1s linear;
 }
+
+.notbold {
+  font-weight:normal;
+  padding-left: 5px;
+}

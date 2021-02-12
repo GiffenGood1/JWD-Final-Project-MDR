@@ -7,7 +7,7 @@ if (localStorage.taskList === undefined) {
     parseInt(localStorage.getItem("currentId"))
   );
 }
-console.log(tasks);
+
 const form = document.querySelector("#form-validate");
 const taskName = document.querySelector("#task-name");
 const assignedTo = document.querySelector("#assigned");
@@ -94,16 +94,6 @@ const validate = (event) => {
       status.value
     );
 
-    //Add html
-
-    // const taskHtml = tasks.createTaskHtml(
-    //   tasks.taskList[tasks.currentId - 1].taskName,
-    //   tasks.taskList[tasks.currentId - 1].description,
-    //   tasks.taskList[tasks.currentId - 1].assignedTo,
-    //   tasks.taskList[tasks.currentId - 1].dueDate,
-    //   tasks.taskList[tasks.currentId - 1].status
-    // );
-
     // Render task
     //cardContainer.append.(taskHtml);
     tasks.createTaskHtml(
@@ -165,7 +155,6 @@ const container = document.querySelector("#card-container");
 container.addEventListener("click", (event) => {
   tasks.deleteTaskHtml(event);
   tasks.deleteTaskObject(event);
-  console.log(tasks);
   tasks.save();
 });
 
@@ -181,8 +170,6 @@ formBtn.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   tasks.taskList.forEach((task) => {
-    console.log(task);
-    console.log(task.id);
     tasks.createTaskHtml(
       task.taskName,
       task.description,
