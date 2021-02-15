@@ -129,6 +129,10 @@ const validate = (event) => {
     dueDate.value = "";
     description.value = "";
   }
+
+  //check due date
+
+  tasks.checkDueDate();
 };
 
 // Submit Form Event
@@ -177,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
       task.id
     );
   });
+  tasks.checkDueDate();
 });
 
 // Change status with slider event
@@ -185,3 +190,5 @@ cardContainer.addEventListener("mouseup", (event) => {
   tasks.changeStatusHTML(event);
   tasks.changeStatusObject(event);
 });
+
+// Testing ZONE

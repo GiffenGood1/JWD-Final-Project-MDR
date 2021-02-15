@@ -22,7 +22,7 @@ class TaskManager {
     const dateValuetest = new Date(
       dateSplittest[0],
       --dateSplittest[1],
-      ++dateSplittest[2]
+      dateSplittest[2]
     );
     const convertedDate = dateValuetest.toString().split("00:00:00");
 
@@ -54,7 +54,10 @@ class TaskManager {
     <input type="range" class="form-range slider" min="0" max="2" step="1" value="${sliderValue}" id="status-slider">`;
     //create card and add card info
     const card = document.createElement("div");
-    card.classList.add("row", "bg-info", "mb-4", "p-3", "task-card");
+    if (status == "Complete") {
+      card.classList.add("bg-info");
+    }
+    card.classList.add("row", "mb-4", "p-3", "task-card");
     //https://code-boxx.com/html-custom-data-attribute/
     card.dataset.taskId = taskId;
     card.innerHTML = cardInfo;
@@ -91,22 +94,27 @@ class TaskManager {
       const parentTask =
         event.target.previousElementSibling.previousElementSibling
           .lastElementChild.firstElementChild;
+      event.target.parentElement;
       if (event.target.value == 2) {
         parentTask.innerText = "Complete";
+        event.target.parentElement.classList.add("bg-info");
       } else if (event.target.value == 0) {
         parentTask.innerText = "Pending";
+        event.target.parentElement.classList.remove("bg-info");
       } else {
         parentTask.innerText = "In Progress";
+        event.target.parentElement.classList.remove("bg-info");
       }
+      this.checkDueDate();
     }
   }
 
   changeStatusObject(event) {
     if (event.target.classList.contains("slider")) {
       const cardTaskId = event.target.parentElement.dataset.taskId;
-
-      tasks.taskList.forEach((element, index) => {
-        if (element.id == cardTaskId) {
+      const card = event.target;
+      tasks.taskList.forEach((task, index) => {
+        if (task.id == cardTaskId) {
           if (event.target.value == 2) {
             tasks.taskList[index].status = "Complete";
           } else if (event.target.value == 0) {
@@ -115,7 +123,6 @@ class TaskManager {
             tasks.taskList[index].status = "In Progress";
           }
         }
-        //console.log(tasks.taskList);
       });
       this.save();
     }
@@ -126,7 +133,7 @@ class TaskManager {
     localStorage.setItem("currentId", JSON.stringify(this.currentId));
   }
 
-  fucntionName() {
+  checkDueDate() {
     // for tasks
     //if red overdue, orange 1-2, yellow 3-5 green 5 or more days, blue done
     this.taskList.forEach((task) => {
@@ -138,13 +145,23 @@ class TaskManager {
       const milsec = dateValue - dateNow;
       const daysTillDue = milsec / 86400000;
       // grab cards
-      const cardsList = document.querySelector("#card-container");
+      const cardsList = Array.from(
+        document.querySelector("#card-container").children
+      );
 
-      if (daysTillDue <= 0) {
-      } else if (daysTillDue <= 2) {
-      } else if (daysTillDue <= 5) {
-      } else {
-      }
+      cardsList.forEach((card) => {
+        if (task.id == card.dataset.taskId) {
+          if (daysTillDue <= 0) {
+            card.style.backgroundColor = "#d21919";
+          } else if (daysTillDue <= 2) {
+            card.style.backgroundColor = "#fd7e14";
+          } else if (daysTillDue <= 5) {
+            card.style.backgroundColor = "#ffc107";
+          } else {
+            card.style.backgroundColor = "#28a745";
+          }
+        }
+      });
     });
   }
 }
