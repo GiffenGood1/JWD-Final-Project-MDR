@@ -154,7 +154,6 @@ form.addEventListener("reset", (event) => {
 cardContainer.addEventListener("click", (event) => {
   tasks.deleteTaskHtml(event);
   tasks.deleteTaskObject(event);
-  tasks.save();
 });
 
 // toggle form open and close
@@ -180,12 +179,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Change status with slider event
 
 cardContainer.addEventListener("mouseup", (event) => {
   tasks.changeStatusHTML(event);
   tasks.changeStatusObject(event);
-  console.log(tasks);
-  localStorage.setItem("taskList", JSON.stringify(tasks.taskList));
-  localStorage.setItem("currentId", JSON.stringify(tasks.currentId));
 });
-
