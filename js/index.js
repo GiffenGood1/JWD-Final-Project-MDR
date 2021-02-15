@@ -17,6 +17,8 @@ const description = document.querySelector("#exampleFormControlTextarea1");
 const cardContainer = document.querySelector("#card-container");
 const formBtn = document.querySelector(".plus-icon");
 const formContainer = document.querySelector(".task-form");
+const statusFilter = document.querySelector("#status-filter");
+const dueDateFilter = document.querySelector("#due-date-filter");
 
 const validate = (event) => {
   event.preventDefault();
@@ -189,6 +191,13 @@ document.addEventListener("DOMContentLoaded", () => {
 cardContainer.addEventListener("mouseup", (event) => {
   tasks.changeStatusHTML(event);
   tasks.changeStatusObject(event);
+});
+
+statusFilter.addEventListener("change", () => {
+  tasks.filter();
+});
+dueDateFilter.addEventListener("change", () => {
+  tasks.filter();
 });
 
 // Testing ZONE

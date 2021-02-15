@@ -59,6 +59,8 @@ class TaskManager {
     }
     card.classList.add("row", "mb-4", "p-3", "task-card");
     //https://code-boxx.com/html-custom-data-attribute/
+
+    card.dataset.status = status;
     card.dataset.taskId = taskId;
     card.innerHTML = cardInfo;
 
@@ -94,18 +96,25 @@ class TaskManager {
       const parentTask =
         event.target.previousElementSibling.previousElementSibling
           .lastElementChild.firstElementChild;
-      event.target.parentElement;
+
+      const card = event.target.parentElement;
       if (event.target.value == 2) {
         parentTask.innerText = "Complete";
-        event.target.parentElement.classList.add("bg-info");
+        card.classList.add("bg-info");
+        card.dataset.status = "Complete";
       } else if (event.target.value == 0) {
         parentTask.innerText = "Pending";
-        event.target.parentElement.classList.remove("bg-info");
+        card.classList.remove("bg-info");
+        card.dataset.status = "Pending";
       } else {
         parentTask.innerText = "In Progress";
-        event.target.parentElement.classList.remove("bg-info");
+        card.classList.remove("bg-info");
+        card.dataset.status = "In Progress";
       }
+      // run on change
       this.checkDueDate();
+
+      this.filter();
     }
   }
 
@@ -153,15 +162,78 @@ class TaskManager {
         if (task.id == card.dataset.taskId) {
           if (daysTillDue <= 0) {
             card.style.backgroundColor = "#d21919";
+            card.dataset.dueDate = "Over Due";
           } else if (daysTillDue <= 2) {
             card.style.backgroundColor = "#fd7e14";
+            card.dataset.dueDate = "Urgent";
           } else if (daysTillDue <= 5) {
             card.style.backgroundColor = "#ffc107";
+            card.dataset.dueDate = "Coming Up";
           } else {
             card.style.backgroundColor = "#28a745";
+            card.dataset.dueDate = "I Got Time";
           }
         }
       });
     });
+  }
+
+  filter() {
+    // Filters cards by certain data-set parameters
+    const statusFilter = document.querySelector("#status-filter").value;
+    const dueDateFilter = document.querySelector("#due-date-filter").value;
+    const cardsList = Array.from(
+      document.querySelector("#card-container").children
+    );
+    // Filter by status
+
+    //For each Card
+    cardsList.forEach((card) => {
+      //if first status filter is default
+      if (statusFilter == "Default") {
+        //if second status filter is default show everything
+        if (dueDateFilter == "Default") {
+          card.style.display = "flex";
+          //if second status filter is complete dont show it
+        } else if (card.dataset.status == "Complete") {
+          card.style.display = "none";
+
+          //if second status filter is equals a card show it
+        } else if (card.dataset.dueDate == dueDateFilter) {
+          card.style.display = "flex";
+          // else dont show it
+        } else {
+          card.style.display = "none";
+        }
+        // if first status equals a card status show it
+      } else if (card.dataset.status == statusFilter) {
+        card.style.display = "flex";
+        //and then if due date filter ...
+        if (dueDateFilter == "Default") {
+          card.style.display = "flex";
+        } else if (card.dataset.status == "Complete") {
+          card.style.display = "none";
+        } else if (card.dataset.dueDate == dueDateFilter) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+        // else show none
+      } else {
+        card.style.display = "none";
+      }
+    });
+    // Filter by dueDate
+    // cardsList.forEach((card) => {
+    //   if (dueDateFilter == "Default") {
+    //     card.style.display = "flex";
+    //   } else if (card.dataset.status == "Complete") {
+    //     card.style.display = "none";
+    //   } else if (card.dataset.dueDate == dueDateFilter) {
+    //     card.style.display = "flex";
+    //   } else {
+    //     card.style.display = "none";
+    //   }
+    // });
   }
 }
