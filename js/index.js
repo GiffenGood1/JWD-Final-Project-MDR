@@ -150,9 +150,8 @@ form.addEventListener("reset", (event) => {
 });
 
 // Delete Task Event
-const container = document.querySelector("#card-container");
 
-container.addEventListener("click", (event) => {
+cardContainer.addEventListener("click", (event) => {
   tasks.deleteTaskHtml(event);
   tasks.deleteTaskObject(event);
   tasks.save();
@@ -181,7 +180,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const hello = document.querySelector("#card-container").childNodes;
-console.log(hello);
 
-console.log(hello.length);
+cardContainer.addEventListener("mouseup", (event) => {
+  tasks.changeStatusHTML(event);
+  tasks.changeStatusObject(event);
+  console.log(tasks);
+  localStorage.setItem("taskList", JSON.stringify(tasks.taskList));
+  localStorage.setItem("currentId", JSON.stringify(tasks.currentId));
+});
+

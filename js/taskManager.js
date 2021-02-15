@@ -26,6 +26,16 @@ class TaskManager {
     );
     const convertedDate = dateValuetest.toString().split("00:00:00");
 
+
+    let sliderValue;
+    if(status == "Complete") {
+      sliderValue = 2
+    } else if (status == "In Progress") {
+      sliderValue = 1
+    } else {
+      sliderValue = 0
+    }
+
     //create card info
     const cardInfo = `
     <div class="col-10">
@@ -42,7 +52,7 @@ class TaskManager {
         </div>
       </div>
     </div>
-    <input type="range" class="form-range slider" min="0" max="8" step="1" id="customRange1">`;
+    <input type="range" class="form-range slider" min="0" max="2" step="1" value="${sliderValue}" id="status-slider">;`
     //create card and add card info
     const card = document.createElement("div");
     card.classList.add("row", "bg-info", "mb-4", "p-3", "task-card");
@@ -83,9 +93,41 @@ class TaskManager {
     }
   }
 
+  changeStatusHTML(event) {
+    if (event.target.classList.contains('slider')) {
+      const parentTask = event.target.previousElementSibling.previousElementSibling.lastElementChild.firstElementChild
+      if(event.target.value == 2) {
+        parentTask.innerText = "Complete"
+      } else if (event.target.value == 0) {
+        parentTask.innerText = "Pending"
+      } else {
+        parentTask.innerText = "In Progress"
+      }
+    };
+  }
+
+  changeStatusObject(event) {
+    const cardTaskId =
+    event.target.parentElement.dataset.taskId;
+
+    tasks.taskList.forEach((element, index) => {
+    if (element.id == cardTaskId) {
+      if(event.target.value == 2) {
+        tasks.taskList.status = "Complete"
+      } else if (event.target.value == 0) {
+        tasks.taskList.status = "Pending"
+      } else {
+        tasks.taskList.status = "In Progress"
+      }
+    }
+    console.log(tasks.taskList)
+  });
+  }
+
   save() {
     localStorage.setItem("taskList", JSON.stringify(this.taskList));
     localStorage.setItem("currentId", JSON.stringify(this.currentId));
+    console.log("i saved")
   }
 
   fucntionName() {
