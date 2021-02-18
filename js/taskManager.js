@@ -1,4 +1,4 @@
-class TaskManager {
+module.exports = class TaskManager {
   constructor(taskList = [], currentId = 0) {
     this.taskList = taskList;
     this.currentId = currentId;
@@ -236,4 +236,4 @@ class TaskManager {
     //   }
     // });
   }
-}
+};
