@@ -84,4 +84,11 @@ describe("TaskManager", () => {
       });
     });
   });
+  describe("#deleteTaskObject", () => {
+    describe("when delete a task", () => {
+      it("should splice task out of taskList", () => {});
+
+      it("should increment currentId by 1", () => {});
+    });
+  });
 });

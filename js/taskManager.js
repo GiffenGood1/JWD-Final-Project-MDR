@@ -1,3 +1,4 @@
+// add module for testing
 module.exports = class TaskManager {
   constructor(taskList = [], currentId = 0) {
     this.taskList = taskList;
@@ -18,13 +19,9 @@ module.exports = class TaskManager {
     //grab container
     const container = document.querySelector("#card-container");
     //convert date
-    const dateSplittest = dueDate.split(/\D/);
-    const dateValuetest = new Date(
-      dateSplittest[0],
-      --dateSplittest[1],
-      dateSplittest[2]
-    );
-    const convertedDate = dateValuetest.toString().split("00:00:00");
+    const dateSplit = dueDate.split(/\D/);
+    const dateValue = new Date(dateSplit[0], --dateSplit[1], dateSplit[2]);
+    const convertedDate = dateValue.toString().split("00:00:00");
 
     let sliderValue;
     if (status == "Complete") {
@@ -82,7 +79,6 @@ module.exports = class TaskManager {
           .dataset.taskId;
 
       tasks.taskList.forEach((element, index) => {
-        console.log(element);
         if (element.id == cardTaskId) {
           tasks.taskList.splice(index, 1);
         }
@@ -143,8 +139,6 @@ module.exports = class TaskManager {
   }
 
   checkDueDate() {
-    // for tasks
-    //if red overdue, orange 1-2, yellow 3-5 green 5 or more days, blue done
     this.taskList.forEach((task) => {
       // convert date to ms
       const dateSplit = task.dueDate.split(/\D/);
@@ -157,7 +151,7 @@ module.exports = class TaskManager {
       const cardsList = Array.from(
         document.querySelector("#card-container").children
       );
-
+      //if overdue turn red, if in 1-2 days turn orange, if in 3-5 days turn yellow, if in 5 or more days turn green, if done turn blue
       cardsList.forEach((card) => {
         if (task.id == card.dataset.taskId) {
           if (daysTillDue <= 0) {

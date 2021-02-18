@@ -20,9 +20,7 @@ const formContainer = document.querySelector(".task-form");
 const statusFilter = document.querySelector("#status-filter");
 const dueDateFilter = document.querySelector("#due-date-filter");
 
-const validate = (event) => {
-  event.preventDefault();
-
+const validateForm = () => {
   // Name Validation
   if (taskName.value.length < 1) {
     taskName.classList.add("is-invalid");
@@ -42,7 +40,6 @@ const validate = (event) => {
   }
 
   // Status Validation
-
   if (status.value === "Choose Status") {
     status.classList.add("is-invalid");
     status.classList.remove("is-valid");
@@ -70,7 +67,6 @@ const validate = (event) => {
   }
 
   // Description Validation
-
   if (description.value.length < 1) {
     description.classList.add("is-invalid");
     description.classList.remove("is-valid");
@@ -78,7 +74,16 @@ const validate = (event) => {
     description.classList.add("is-valid");
     description.classList.remove("is-invalid");
   }
+};
 
+const validate = (event) => {
+  //prevent default form submission
+  event.preventDefault();
+
+  // run form validation
+  validateForm();
+
+  // Check form validation was succesful (all classes are is-valid)
   if (
     description.classList.contains("is-valid") &&
     taskName.classList.contains("is-valid") &&
@@ -87,7 +92,6 @@ const validate = (event) => {
     dueDate.classList.contains("is-valid")
   ) {
     // Add task from form to class
-
     tasks.addTask(
       taskName.value,
       description.value,
@@ -97,7 +101,6 @@ const validate = (event) => {
     );
 
     // Render task
-    //cardContainer.append.(taskHtml);
     tasks.createTaskHtml(
       taskName.value,
       description.value,
@@ -107,16 +110,8 @@ const validate = (event) => {
       tasks.currentId
     );
 
+    // Save task to local storage
     tasks.save();
-
-    // open and close form
-    formBtn.classList.toggle("plus-icon-rotate-open");
-    form.classList.toggle("display-none");
-    formContainer.classList.toggle("pb-4");
-
-    //  TASK TESTS
-    console.log(tasks);
-    // console.log(taskHtml);
 
     //return form to default
     taskName.classList.remove("is-valid");
@@ -130,10 +125,14 @@ const validate = (event) => {
     status.value = "Choose Status";
     dueDate.value = "";
     description.value = "";
+
+    // close form when submitted
+    formBtn.classList.toggle("plus-icon-rotate-open");
+    form.classList.toggle("display-none");
+    formContainer.classList.toggle("pb-4");
   }
 
-  //check due date
-
+  //check due dates everytime new task is added
   tasks.checkDueDate();
 };
 
@@ -141,7 +140,6 @@ const validate = (event) => {
 form.addEventListener("submit", validate);
 
 // Clear Form Event
-
 form.addEventListener("reset", (event) => {
   taskName.classList.remove("is-valid");
   taskName.classList.remove("is-invalid");
@@ -156,22 +154,19 @@ form.addEventListener("reset", (event) => {
 });
 
 // Delete Task Event
-
 cardContainer.addEventListener("click", (event) => {
   tasks.deleteTaskHtml(event);
   tasks.deleteTaskObject(event);
 });
 
-// toggle form open and close
-
+// toggle form open and close event
 formBtn.addEventListener("click", () => {
   formBtn.classList.toggle("plus-icon-rotate-open");
   form.classList.toggle("display-none");
   formContainer.classList.toggle("pb-4");
 });
 
-// Load tasks from storage
-
+// Load tasks from storage on DOM load
 document.addEventListener("DOMContentLoaded", () => {
   tasks.taskList.forEach((task) => {
     tasks.createTaskHtml(
@@ -187,17 +182,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Change status with slider event
-
 cardContainer.addEventListener("mouseup", (event) => {
   tasks.changeStatusHTML(event);
   tasks.changeStatusObject(event);
 });
 
+//Filter tasks events
 statusFilter.addEventListener("change", () => {
   tasks.filter();
 });
 dueDateFilter.addEventListener("change", () => {
   tasks.filter();
 });
-
-// Testing ZONE
