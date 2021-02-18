@@ -23,6 +23,7 @@ class TaskManager {
     const dateValue = new Date(dateSplit[0], --dateSplit[1], dateSplit[2]);
     const convertedDate = dateValue.toString().split("00:00:00");
 
+    // Changing value of slider based on status
     let sliderValue;
     if (status == "Complete") {
       sliderValue = 2;
@@ -55,10 +56,13 @@ class TaskManager {
       card.classList.add("bg-info");
     }
     card.classList.add("row", "mb-4", "p-3", "task-card");
-    //https://code-boxx.com/html-custom-data-attribute/
 
+    //add data set
+    //https://code-boxx.com/html-custom-data-attribute/
     card.dataset.status = status;
     card.dataset.taskId = taskId;
+
+    // putting HTML in card
     card.innerHTML = cardInfo;
 
     //add card to container
@@ -83,6 +87,7 @@ class TaskManager {
           tasks.taskList.splice(index, 1);
         }
       });
+      // saving to local storage
       this.save();
     }
   }
@@ -92,7 +97,7 @@ class TaskManager {
       const parentTask =
         event.target.previousElementSibling.previousElementSibling
           .lastElementChild.firstElementChild;
-
+      // changing status based on slider value
       const card = event.target.parentElement;
       if (event.target.value == 2) {
         parentTask.innerText = "Complete";
@@ -109,7 +114,7 @@ class TaskManager {
       }
       // run on change
       this.checkDueDate();
-
+      // run on change
       this.filter();
     }
   }
@@ -129,6 +134,8 @@ class TaskManager {
           }
         }
       });
+
+      // saving to local storage
       this.save();
     }
   }
@@ -230,4 +237,4 @@ class TaskManager {
     //   }
     // });
   }
-};
+}
