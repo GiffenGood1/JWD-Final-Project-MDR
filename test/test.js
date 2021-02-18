@@ -1,10 +1,24 @@
-//const { assert } = require("chai");
-//
-//const { expect } = require("chai");
+const { assert } = require("chai");
 
-const assert = require("assert");
+// const { expect } = require("chai");
 
+// const { spies } = require("chai-spies")
+
+// // const assert = require("assert");
+
+// const TaskManager = require("../js/taskManager");
+
+const chai = require("chai"),
+  spies = require("chai-spies");
+
+// const jsdom = require("../node_modules/jsdom");
+// const { JSDOM } = jsdom;
+
+chai.use(spies);
+
+const expect = chai.expect;
 const TaskManager = require("../js/taskManager");
+// const { beforeEach } = require("mocha");
 
 describe("TaskManager", () => {
   describe("#constructor", () => {
@@ -89,6 +103,44 @@ describe("TaskManager", () => {
       it("should splice task out of taskList", () => {});
 
       it("should increment currentId by 1", () => {});
+    });
+  });
+  describe("#save", () => {
+    describe("when tasks exist in the task manager", () => {
+      it("should store tasks in local storage", () => {
+        global.localStorage = {}
+        const taskManager = new TaskManager();
+        task = 
+          {
+            id: taskManager.currentId + 1,
+            taskName: "taskName",
+            description: "description",
+            assignedTo: "assignedTo",
+            dueDate: "dueDate",
+            status: "status",
+          }
+        
+
+        taskManager.addTask(
+          "taskName",
+          "description",
+          "assignedTo",
+          "dueDate",
+          "status"
+        );
+
+        const tasksJson = JSON.stringify([task])
+
+        chai.spy.on(localStorage, "setItem", () => {});
+
+        taskManager.save();
+
+        expect(localStorage.setItem).to.have.been.called.with(
+          "taskList",
+          tasksJson
+        );
+        chai.spy.restore() 
+      });
     });
   });
 });

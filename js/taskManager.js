@@ -1,5 +1,5 @@
 // add module for testing
-module.exports = class TaskManager {
+class TaskManager {
   constructor(taskList = [], currentId = 0) {
     this.taskList = taskList;
     this.currentId = currentId;
