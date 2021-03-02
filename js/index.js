@@ -1,3 +1,4 @@
+// Initilize tasks from local storage or create new if no local storage
 let tasks;
 if (localStorage.taskList === undefined) {
   tasks = new TaskManager();
@@ -7,7 +8,7 @@ if (localStorage.taskList === undefined) {
     parseInt(localStorage.getItem("currentId"))
   );
 }
-
+// Selectors
 const form = document.querySelector("#form-validate");
 const taskName = document.querySelector("#task-name");
 const assignedTo = document.querySelector("#assigned");
@@ -130,10 +131,10 @@ const validate = (event) => {
     formBtn.classList.toggle("plus-icon-rotate-open");
     form.classList.toggle("display-none");
     formContainer.classList.toggle("pb-4");
-  }
 
-  //check due dates everytime new task is added
-  tasks.checkDueDate();
+    //check due dates everytime new task is added
+    tasks.checkDueDate();
+  }
 };
 
 // Submit Form Event

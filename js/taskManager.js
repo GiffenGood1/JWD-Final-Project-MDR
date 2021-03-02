@@ -52,6 +52,7 @@ class TaskManager {
     <input type="range" class="form-range slider" min="0" max="2" step="1" value="${sliderValue}" id="status-slider">`;
     //create card and add card info
     const card = document.createElement("div");
+    // Check for complete status to change style
     if (status == "Complete") {
       card.classList.add("bg-info");
     }
